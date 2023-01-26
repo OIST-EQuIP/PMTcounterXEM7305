@@ -1,0 +1,52 @@
+1, python installation
+python 3.7 is installed in my PC DELL 3640.
+C:\Users\Seigen\AppData\Local\Programs\Python\Python37\;
+you can find it in PATH:
+> PATH
+
+2, site_packages
+C:\Users\Seigen\AppData\Local\Programs\Python\Python37\Lib\site-packages
+you can find pip, pyvisa ...
+
+3, PyQt
+pip install PyQt5
+pip install PyQt5_tools (designer)
+
+4, convert .ui (created by designer) to .py
+pyuic5 -x test.ui -o test.py
+
+
+5, FrontPanel python API 
+     <FP_root> is normally "C:\Program Files\Opal Kelly\FrontPanelUSB\". 
+        Add "<FP_root>\API\lib\x64" and "<FP_root>\API\Python\3.7\x64" to PATH. 
+        Add "<FP_root>\API\Python\3.7\x64" to PYTHONPATH 
+
+>>> import ok
+>>> dev = ok.okCFrontPanel()
+>>> devcnt = dev.GetDeviceCount()
+>>> devcnt
+1
+>>> for i in range(devcnt):
+...   print('dev[{0}] model: {1}'.format(i, dev.GetDeviceListModel(i)))
+...   print('dev[{0}] serial: {1}'.format(i, dev.GetDeviceListSerial(i)))
+...
+dev[0] model: 2
+dev[0] serial: 102900007Z
+>>> dev.OpenBySerial('')
+0
+>>> error = dev.ConfigureFPGA('top.bit')
+>>> error
+0
+>>> dev.SetWireInValue(0x00, 0xd000)
+0
+>>> dev.SetWireInValue(0x01, 0x0011)
+0
+>>> dev.UpdateWireIns()
+0
+>>> dev.SetWireInValue(0x00, 0xc000)
+0
+>>> dev.SetWireInValue(0x01, 0x0010)
+0
+
+6, type hint
+    def getAIData(self,port: str) -> list:
